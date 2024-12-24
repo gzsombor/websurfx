@@ -53,6 +53,8 @@ pub struct Config {
     pub proxy: Option<Proxy>,
     /// It stores the number of https connections to keep in the pool.
     pub number_of_https_connections: u8,
+    /// It stores the operating system's TLS certificates for https requests.
+    pub operating_system_tls_certificates: bool,
 }
 
 impl Config {
@@ -132,6 +134,8 @@ impl Config {
         });
 
         Ok(Config {
+            operating_system_tls_certificates: globals
+                .get::<_, bool>("operating_system_tls_certificates")?,
             port: globals.get::<_, u16>("port")?,
             binding_ip: globals.get::<_, String>("binding_ip")?,
             style: Style::new(

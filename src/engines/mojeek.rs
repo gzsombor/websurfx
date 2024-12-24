@@ -31,8 +31,8 @@ impl Mojeek {
             parser: SearchResultParser::new(
                 ".result-col",
                 ".results-standard li",
-                "a span.url",
-                "h2 a.title",
+                "h2 > a.title",
+                "a.ob",
                 "p.s",
             )?,
         })
@@ -152,7 +152,7 @@ impl SearchEngine for Mojeek {
             .parse_for_results(&document, |title, url, desc| {
                 Some(SearchResult::new(
                     title.inner_html().trim(),
-                    url.inner_html().trim(),
+                    url.attr("href")?.trim(),
                     desc.inner_html().trim(),
                     &["mojeek"],
                 ))
